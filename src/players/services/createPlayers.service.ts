@@ -4,20 +4,19 @@ import { Player } from '../interfaces/palyer.interface';
 import { v4 } from 'uuid';
 
 @Injectable()
-export class PlayersService {
+export class CreatePlayersService {
   private players: Player[] = [];
 
-  private readonly logger = new Logger(PlayersService.name);
+  private readonly logger = new Logger(CreatePlayersService.name);
 
-  async savePlayer(createPlayerDto: CreatePlayerDto): Promise<Player> {
+  async execute(createPlayerDto: CreatePlayerDto): Promise<void> {
+    //displays log message with the data of the created player.
     this.logger.log(`createPlayerDto: ${JSON.stringify(createPlayerDto)}`);
 
-    const player = await this.save(createPlayerDto);
-
-    return player;
+    await this.save(createPlayerDto);
   }
 
-  private async save(createPlayerDto: CreatePlayerDto): Promise<Player> {
+  private async save(createPlayerDto: CreatePlayerDto): Promise<void> {
     const { email, name, phoneNumber } = createPlayerDto;
 
     const player: Player = {
@@ -31,7 +30,5 @@ export class PlayersService {
     };
 
     this.players.push(player);
-
-    return player;
   }
 }

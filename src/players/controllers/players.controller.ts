@@ -1,22 +1,25 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CreatePlayerDto } from '../dtos/create-player.dto';
 import { Player } from '../interfaces/palyer.interface';
-import { PlayersService } from '../services/players.service';
+import { CreatePlayersService } from '../services/createPlayers.service';
 
 @Controller('players')
 export class PlayersController {
-  constructor(private readonly playersService: PlayersService) {}
+  constructor(private readonly playersService: CreatePlayersService) {}
 
   @Post()
-  async savePlayer(@Body() createPlayerDto: CreatePlayerDto): Promise<Player> {
+  async savePlayer(@Body() createPlayerDto: CreatePlayerDto): Promise<void> {
     const { name, email, phoneNumber } = createPlayerDto;
 
-    const player = await this.playersService.savePlayer({
+    await this.playersService.execute({
       name,
       email,
       phoneNumber,
     });
+  }
 
-    return player;
+  @Get()
+  async listPlayers(): Promise<Player[]> {
+    return [];
   }
 }
