@@ -4,10 +4,10 @@ import { Player } from '../interfaces/palyer.interface';
 import { v4 } from 'uuid';
 
 @Injectable()
-export class CreatePlayersService {
+export class CreatePlayerService {
   private players: Player[] = [];
 
-  private readonly logger = new Logger(CreatePlayersService.name);
+  private readonly logger = new Logger(CreatePlayerService.name);
 
   async execute(createPlayerDto: CreatePlayerDto): Promise<void> {
     //displays log message with the data of the created player.
