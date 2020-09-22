@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Player } from '../interfaces/palyer.interface';
@@ -13,7 +13,7 @@ export class FindPlayerByIdService {
     const player = this.playerModel.findById(Id);
 
     if (!player) {
-      throw new Error('Player not found!');
+      throw new NotFoundException('Player not found!');
     }
 
     return player;
