@@ -1,34 +1,32 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreatePlayerDto } from '../dtos/create-player.dto';
 import { Player } from '../interfaces/palyer.interface';
-import { v4 } from 'uuid';
 
 @Injectable()
 export class CreatePlayerService {
-  private players: Player[] = [];
+  constructor(
+    @InjectModel('Player') private readonly playerModel: Model<Player>,
+  ) {}
 
-  private readonly logger = new Logger(CreatePlayerService.name);
-
-  async execute(createPlayerDto: CreatePlayerDto): Promise<void> {
-    //displays log message with the data of the created player.
-    this.logger.log(`createPlayerDto: ${JSON.stringify(createPlayerDto)}`);
-
-    await this.save(createPlayerDto);
-  }
-
-  private async save(createPlayerDto: CreatePlayerDto): Promise<void> {
+  async execute(createPlayerDto: CreatePlayerDto): Promise<Player> {
     const { email, name, phoneNumber } = createPlayerDto;
 
-    const player: Player = {
-      _id: v4(),
-      name,
-      email,
-      phoneNumber,
-      ranking: 'A',
-      rankingPosition: 3,
-      urlAvatarPlayer: 'https://api.adorable.io/avatars/60/abott@adorable.png',
-    };
+    const playerEmailExists = await this.playerModel.findOne({ email }).exec();
 
-    this.players.push(player);
+    if (playerEmailExists) {
+    }
+
+    const playerPhoneExists = await this.playerModel
+      .findOne({ phoneNumber })
+      .exec();
+
+    if (playerPhoneExists) {
+    }
+
+    const player = new this.playerModel({ email, name, phoneNumber });
+
+    return player.save();
   }
 }

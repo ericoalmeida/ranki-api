@@ -4,12 +4,16 @@ import { Model } from 'mongoose';
 import { Player } from '../interfaces/palyer.interface';
 
 @Injectable()
-export class ListAllPlayersService {
+export class DeletePlayerService {
   constructor(
     @InjectModel('Player') private readonly playerModel: Model<Player>,
   ) {}
 
-  async execute(): Promise<Player[]> {
-    return this.playerModel.find().exec();
+  async execute(Id: string): Promise<void> {
+    try {
+      this.playerModel.findByIdAndDelete(Id).exec();
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }
