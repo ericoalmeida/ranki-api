@@ -6,6 +6,8 @@ import {
   Param,
   Post,
   Put,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { PlayerDto } from '../dtos/player.dto';
 import { Player } from '../interfaces/palyer.interface';
@@ -40,6 +42,7 @@ export class PlayersController {
   }
 
   @Post()
+  @UsePipes(ValidationPipe)
   async savePlayer(@Body() createPlayerDto: PlayerDto): Promise<void> {
     const { name, email, phoneNumber } = createPlayerDto;
 
