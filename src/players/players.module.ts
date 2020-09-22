@@ -3,9 +3,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { PlayersController } from './controllers/players.controller';
 import { PlayerSchema } from './repositories/player.schema';
 import { CreatePlayerService } from './services/createPlayer.service';
-import { DeletePlayerByIdService } from './services/deletePlayerById.service';
-import { FindPlayerByIdService } from './services/findPlayerById.service';
+import { DeletePlayerService } from './services/deletePlayer.service';
+import { FindPlayerService } from './services/findPlayer.service';
 import { ListAllPlayersService } from './services/listAllPlayers.service';
+import { UpdatePlayerService } from './services/updatePlayer.service';
 
 @Module({
   imports: [
@@ -14,9 +15,10 @@ import { ListAllPlayersService } from './services/listAllPlayers.service';
   controllers: [PlayersController],
   providers: [
     CreatePlayerService,
+    UpdatePlayerService,
     ListAllPlayersService,
-    FindPlayerByIdService,
-    DeletePlayerByIdService,
+    FindPlayerService,
+    DeletePlayerService,
   ],
 })
 export class PlayersModule {}
