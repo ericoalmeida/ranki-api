@@ -10,12 +10,13 @@ export class CreatePlayerService {
     @InjectModel('Player') private readonly playerModel: Model<Player>,
   ) {}
 
-  async execute(createPlayerDto: CreatePlayerDto): Promise<Player> {
+  async execute(createPlayerDto: CreatePlayerDto): Promise<void> {
     const { email, name, phoneNumber } = createPlayerDto;
 
     const playerEmailExists = await this.playerModel.findOne({ email }).exec();
 
     if (playerEmailExists) {
+      throw new Error('Player already exists with this email!');
     }
 
     const playerPhoneExists = await this.playerModel
@@ -23,10 +24,11 @@ export class CreatePlayerService {
       .exec();
 
     if (playerPhoneExists) {
+      throw new Error('Player already exists with this phone number!');
     }
 
     const player = new this.playerModel({ email, name, phoneNumber });
 
-    return player.save();
+    player.save();
   }
 }

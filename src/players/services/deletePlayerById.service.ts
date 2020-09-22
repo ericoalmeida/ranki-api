@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { Player } from '../interfaces/palyer.interface';
 
 @Injectable()
-export class DeletePlayerService {
+export class DeletePlayerByIdService {
   constructor(
     @InjectModel('Player') private readonly playerModel: Model<Player>,
   ) {}

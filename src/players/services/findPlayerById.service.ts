@@ -4,13 +4,17 @@ import { Model } from 'mongoose';
 import { Player } from '../interfaces/palyer.interface';
 
 @Injectable()
-export class FindPlayerById {
+export class FindPlayerByIdService {
   constructor(
     @InjectModel('Player') private readonly playerModel: Model<Player>,
   ) {}
 
   async execute(Id: string): Promise<Player> {
     const player = this.playerModel.findById(Id);
+
+    if (!player) {
+      throw new Error('Player not found!');
+    }
 
     return player;
   }

@@ -3,6 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { PlayersController } from './controllers/players.controller';
 import { PlayerSchema } from './repositories/player.schema';
 import { CreatePlayerService } from './services/createPlayer.service';
+import { DeletePlayerByIdService } from './services/deletePlayerById.service';
+import { FindPlayerByIdService } from './services/findPlayerById.service';
 import { ListAllPlayersService } from './services/listAllPlayers.service';
 
 @Module({
@@ -10,6 +12,11 @@ import { ListAllPlayersService } from './services/listAllPlayers.service';
     MongooseModule.forFeature([{ name: 'Player', schema: PlayerSchema }]),
   ],
   controllers: [PlayersController],
-  providers: [CreatePlayerService, ListAllPlayersService],
+  providers: [
+    CreatePlayerService,
+    ListAllPlayersService,
+    FindPlayerByIdService,
+    DeletePlayerByIdService,
+  ],
 })
 export class PlayersModule {}
