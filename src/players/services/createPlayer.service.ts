@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PlayerDto } from '../dtos/player.dto';
@@ -16,7 +16,9 @@ export class CreatePlayerService {
     const playerEmailExists = await this.playerModel.findOne({ email }).exec();
 
     if (playerEmailExists) {
-      throw new Error('Player already exists with this email!');
+      throw new BadRequestException(
+        `Player already exists with email ${email}`,
+      );
     }
 
     const playerPhoneExists = await this.playerModel
@@ -24,7 +26,9 @@ export class CreatePlayerService {
       .exec();
 
     if (playerPhoneExists) {
-      throw new Error('Player already exists with this phone number!');
+      throw new BadRequestException(
+        `Player already exists with phone number ${phoneNumber}`,
+      );
     }
 
     const player = new this.playerModel({ email, name, phoneNumber });
