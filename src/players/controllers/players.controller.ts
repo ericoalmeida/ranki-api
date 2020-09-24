@@ -35,7 +35,7 @@ export class PlayersController {
   }
 
   @Get(':id')
-  async findById(@Param('id') id: string): Promise<Player> {
+  async findPlayer(@Param('id') id: string): Promise<Player> {
     const player = await this.findPlayerService.execute(id);
 
     return player;
@@ -62,7 +62,7 @@ export class PlayersController {
   }
 
   @Delete(':id')
-  async deleteById(@Param('id') id: string): Promise<void> {
+  async deletePlayer(@Param('id') id: string): Promise<void> {
     await this.deletePlayerService.execute(id);
   }
 }
