@@ -11,5 +11,5 @@ export class categoryDto {
 
   @IsArray()
   @ArrayMinSize(1)
-  readonly events: string;
+  readonly events: Array<Event>;
 }

@@ -11,12 +11,7 @@ export const CategorySchema = new Schema(
         value: { type: Number },
       },
     ],
-    players: [
-      {
-        player_id: Schema.Types.ObjectId,
-        ref: 'players',
-      },
-    ],
+    players: { type: 'ObjectId', ref: 'players' },
   },
   { timestamps: true, collection: 'category' },
 );
