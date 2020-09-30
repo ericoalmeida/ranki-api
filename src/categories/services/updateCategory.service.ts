@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { categoryDto } from '../dtos/category.dto';
@@ -10,17 +10,21 @@ export class UpdateCategoryService {
   ) {}
 
   async execute(Id: string, updateCategoryDto: categoryDto): Promise<void> {
-    const lcategory = await this.categoryModel.findById(Id);
+    const lCategory = await this.categoryModel.findById(Id);
     const { category, description, events } = updateCategoryDto;
 
-    if (!lcategory) {
-      throw new BadRequestException('Category not found!');
+    if (!lCategory) {
+      throw new NotFoundException('Category not found!');
     }
 
-    console.log(events);
-
     await this.categoryModel
-      .findOneAndUpdate({ Id }, { category, description, ...events })
+      .findByIdAndUpdate(
+        Id,
+        {
+          $set: { category, description, events },
+        },
+        { new: true },
+      )
       .exec();
   }
 }
