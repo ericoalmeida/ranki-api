@@ -11,13 +11,16 @@ export class UpdateCategoryService {
 
   async execute(Id: string, updateCategoryDto: categoryDto): Promise<void> {
     const lcategory = await this.categoryModel.findById(Id);
+    const { category, description, events } = updateCategoryDto;
 
     if (!lcategory) {
       throw new BadRequestException('Category not found!');
     }
 
+    console.log(events);
+
     await this.categoryModel
-      .findByIdAndUpdate(Id, { updateCategoryDto })
+      .findOneAndUpdate({ Id }, { category, description, ...events })
       .exec();
   }
 }
