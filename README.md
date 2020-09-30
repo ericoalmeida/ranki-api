@@ -2,14 +2,11 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="300" alt="Nest Logo" /></a>
 </p>
 
-<p align="center">
 ![GitHub issues](https://img.shields.io/github/issues/ericoalmeida/ranki-api?style=flat-square)
 ![GitHub contributors](https://img.shields.io/github/contributors/ericoalmeida/ranki-api?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ericoalmeida/ranki-api?style=flat-square)
 ![GitHub language count](https://img.shields.io/github/languages/count/ericoalmeida/ranki-api?style=flat-square)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ericoalmeida/ranki-api?style=flat-square)
-
-</p>
 
 ## Installation
 
