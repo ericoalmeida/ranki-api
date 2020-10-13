@@ -14,6 +14,7 @@ import { Category } from '../interfaces/category.interface';
 import { CreateCategoryService } from '../services/createCategory.service';
 import { DeleteCategoryService } from '../services/deleteCategory.service';
 import { FindCategoryService } from '../services/FindCategory.service';
+import { LinkPlayerToCategoryService } from '../services/linkPlayerToCategory.service';
 import { ListAllCategoriesService } from '../services/listAllCategories.service';
 import { UpdateCategoryService } from '../services/updateCategory.service';
 
@@ -25,6 +26,7 @@ export class CategoriesController {
     private readonly findCategoryService: FindCategoryService,
     private readonly updateCategoryService: UpdateCategoryService,
     private readonly deleteCategoryService: DeleteCategoryService,
+    private readonly linkPlayerToCategoryService: LinkPlayerToCategoryService,
   ) {}
 
   @Get()
@@ -54,6 +56,7 @@ export class CategoriesController {
   }
 
   @Put(':id')
+  @UsePipes(ValidationPipe)
   async updateCategory(
     @Param('id') id: string,
     @Body() updateCategoryDto: categoryDto,
@@ -64,5 +67,13 @@ export class CategoriesController {
   @Delete(':id')
   async deleteCategory(@Param('id') id: string): Promise<void> {
     await this.deleteCategoryService.execute(id);
+  }
+
+  @Post(':categoryId/player/:playerId')
+  async linkPlayerToCategory(@Param() params: string[]): Promise<void> {
+    const categoryId = params['categoryId'];
+    const playerId = params['playerId'];
+
+    await this.linkPlayerToCategoryService.execute(categoryId, playerId);
   }
 }

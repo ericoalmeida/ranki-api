@@ -10,8 +10,9 @@ export class UpdateCategoryService {
   ) {}
 
   async execute(Id: string, updateCategoryDto: categoryDto): Promise<void> {
-    const lCategory = await this.categoryModel.findById(Id);
     const { category, description, events } = updateCategoryDto;
+
+    const lCategory = await this.categoryModel.findById(Id);
 
     if (!lCategory) {
       throw new NotFoundException('Category not found!');

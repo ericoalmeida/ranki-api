@@ -7,10 +7,13 @@ import { UpdateCategoryService } from './services/updateCategory.service';
 import { DeleteCategoryService } from './services/deleteCategory.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CategorySchema } from './repositories/category.schema';
+import { LinkPlayerToCategoryService } from './services/linkPlayerToCategory.service';
+import { PlayerSchema } from 'src/players/repositories/player.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Category', schema: CategorySchema }]),
+    MongooseModule.forFeature([{ name: 'Player', schema: PlayerSchema }]),
   ],
   controllers: [CategoriesController],
   providers: [
@@ -19,6 +22,7 @@ import { CategorySchema } from './repositories/category.schema';
     FindCategoryService,
     UpdateCategoryService,
     DeleteCategoryService,
+    LinkPlayerToCategoryService,
   ],
 })
 export class CategoriesModule {}
