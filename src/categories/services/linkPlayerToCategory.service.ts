@@ -5,14 +5,14 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Player } from 'src/players/interfaces/palyer.interface';
+import { FindPlayerService } from 'src/players/services/findPlayer.service';
 import { Category } from '../interfaces/category.interface';
 
 @Injectable()
 export class LinkPlayerToCategoryService {
   constructor(
     @InjectModel('Category') private readonly categoryModel: Model<Category>,
-    @InjectModel('Player') private readonly playerModel: Model<Player>,
+    private readonly  findPlayers: FindPlayerService,
   ) {}
 
   async execute(categoryId: string, playerId: string): Promise<void> {
@@ -22,7 +22,7 @@ export class LinkPlayerToCategoryService {
       throw new NotFoundException('Category not found');
     }
 
-    const player = await this.playerModel.findById(playerId).exec();
+    const player = await this.findPlayers.execute(playerId);
 
     if (!player) {
       throw new NotFoundException('Player not found');
@@ -42,6 +42,6 @@ export class LinkPlayerToCategoryService {
 
     category.players.push(player);
 
-    await this.categoryModel.findByIdAndUpdate(categoryId, category);
+    await this.categoryModel.findByIdAndUpdate(categoryId, category).exec();
   }
 }

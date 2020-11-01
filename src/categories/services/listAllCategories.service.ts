@@ -10,7 +10,7 @@ export class ListAllCategoriesService {
   ) {}
 
   async execute(): Promise<Category[]> {
-    const categories = await this.categoryModel.find().exec();
+    const categories = await this.categoryModel.find().populate('players').exec();
 
     return categories;
   }

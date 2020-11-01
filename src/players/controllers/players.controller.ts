@@ -16,6 +16,7 @@ import { FindPlayerService } from '../services/findPlayer.service';
 import { ListAllPlayersService } from '../services/listAllPlayers.service';
 import { DeletePlayerService } from '../services/deletePlayer.service';
 import { UpdatePlayerService } from '../services/updatePlayer.service';
+import { ValidationParamsPipe } from 'src/common/validations/ValidationParams.pipe';
 
 @Controller('players')
 export class PlayersController {
@@ -35,7 +36,7 @@ export class PlayersController {
   }
 
   @Get(':id')
-  async findPlayer(@Param('id') id: string): Promise<Player> {
+  async findPlayer(@Param('id', ValidationParamsPipe) id: string): Promise<Player> {
     const player = await this.findPlayerService.execute(id);
 
     return player;
@@ -55,14 +56,14 @@ export class PlayersController {
 
   @Put(':id')
   async updatePlayer(
-    @Param('id') id: string,
+    @Param('id', ValidationParamsPipe) id: string,
     @Body() updatePlayerDto: PlayerDto,
   ): Promise<void> {
     await this.updatePlayerService.execute(id, updatePlayerDto);
   }
 
   @Delete(':id')
-  async deletePlayer(@Param('id') id: string): Promise<void> {
+  async deletePlayer(@Param('id', ValidationParamsPipe) id: string): Promise<void> {
     await this.deletePlayerService.execute(id);
   }
 }

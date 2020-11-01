@@ -20,5 +20,8 @@ import { UpdatePlayerService } from './services/updatePlayer.service';
     FindPlayerService,
     DeletePlayerService,
   ],
+  exports: [
+    FindPlayerService
+  ]
 })
 export class PlayersModule {}
