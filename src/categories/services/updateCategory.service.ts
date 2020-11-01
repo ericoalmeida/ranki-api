@@ -10,7 +10,7 @@ export class UpdateCategoryService {
   ) {}
 
   async execute(Id: string, updateCategoryDto: categoryDto): Promise<void> {
-    const { category, description, events } = updateCategoryDto;
+    const { description, events } = updateCategoryDto;
 
     const lCategory = await this.categoryModel.findById(Id);
 
@@ -18,11 +18,14 @@ export class UpdateCategoryService {
       throw new NotFoundException('Category not found!');
     }
 
+    lCategory.description = description;
+    events && events.forEach(event => lCategory.events.push(event)); 
+
     await this.categoryModel
       .findByIdAndUpdate(
         Id,
         {
-          $set: { category, description, events },
+          $set: lCategory,
         },
         { new: true },
       )

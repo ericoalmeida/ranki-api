@@ -29,12 +29,12 @@ export class LinkPlayerToCategoryService {
     }
 
     const playerExistsAtCategory = await this.categoryModel
-      .find({ categoryId })
+      .find({ _id: categoryId })
       .where('players')
       .in(player._id)
       .exec();
 
-    if (playerExistsAtCategory) {
+    if (playerExistsAtCategory.length > 0) {
       throw new BadRequestException(
         'This user already exists at this category',
       );
